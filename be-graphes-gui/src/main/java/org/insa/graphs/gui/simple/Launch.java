@@ -26,6 +26,7 @@ public class Launch {
      * 
      * @throws Exception if something wrong happens when creating the graph.
      */
+	//Guerbette Valentin 02/04/2021
     public static Drawing createDrawing() throws Exception {
         BasicDrawing basicDrawing = new BasicDrawing();
         SwingUtilities.invokeAndWait(new Runnable() {
