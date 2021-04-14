@@ -30,12 +30,42 @@ public class Path {
      * @throws IllegalArgumentException If the list of nodes is not valid, i.e. two
      *         consecutive nodes in the list are not connected in the graph.
      * 
-     * @deprecated Need to be implemented.
      */
     public static Path createFastestPathFromNodes(Graph graph, List<Node> nodes)
             throws IllegalArgumentException {
+        // TODO:
+        if(nodes.size() == 0) {
+            return new Path(graph); 
+        }
+        if(nodes.size() == 1) {
+            return new Path(graph, nodes.get(0)); 
+        }
         List<Arc> arcs = new ArrayList<Arc>();
         // TODO:
+        List<Arc> successors_ok = new ArrayList<Arc>(); //List of successors leading to the next node
+        Arc fastest_arc;
+        for(int i = 0; i < nodes.size()-1; i++) { //We do not care about the last node for it has no successor.
+        	successors_ok.clear();
+        	//Listing successors leading to the next node
+        	for(int j = 0; j<nodes.get(i).getNumberOfSuccessors();j++) {
+        		if( nodes.get(i).getSuccessors().get(j).getDestination() == nodes.get(i+1) ) {
+        			successors_ok.add(nodes.get(i).getSuccessors().get(j));
+        		}
+        	}
+        	//Failure to retrieve successors leading to the next node
+        	if(successors_ok.isEmpty()) {
+        		throw new IllegalArgumentException("Node without successor");
+        	}
+        	//Finding the fastest arc leading to the next node
+        	fastest_arc = successors_ok.get(0);
+        	for(int j = 0; j<successors_ok.size(); j++) {
+        		if(successors_ok.get(j).getMinimumTravelTime() < fastest_arc.getMinimumTravelTime()) {
+        			fastest_arc = successors_ok.get(j);
+        		}
+        	}
+        	//Adding fastest arc to the arcs list
+        	arcs.add(fastest_arc);
+        }
         return new Path(graph, arcs);
     }
 
@@ -50,30 +80,82 @@ public class Path {
      * 
      * @throws IllegalArgumentException If the list of nodes is not valid, i.e. two
      *         consecutive nodes in the list are not connected in the graph.
-     *
-     * @deprecated Need to be implemented.
      */
     public static Path createShortestPathFromNodes(Graph graph, List<Node> nodes)
             throws IllegalArgumentException {
+    	if(nodes.size() == 0) {
+            return new Path(graph); 
+        }
+        if(nodes.size() == 1) {
+            return new Path(graph, nodes.get(0)); 
+        }
         List<Arc> arcs = new ArrayList<Arc>();
         // TODO:
-        List<Arc> successors;
-        Arc shortest;
-        for (int i = 0 ; i < nodes.size() ; i++) {
-        	successors = nodes.get(i).getSuccessors();
-        	if(nodes.get(i).getNumberOfSuccessors() != 0) {
-	        	shortest = successors.get(0);
-	        	for (Arc successor: successors) {
-	        		if(successor.getLength() < shortest.getLength()) {
-	        			shortest = successor; 
-	        		}
-	        	}
-	        	arcs.add(shortest);
+        List<Arc> successors_ok = new ArrayList<Arc>(); //List of successors leading to the next node
+        Arc shortest_arc;
+        for(int i = 0; i < nodes.size()-1; i++) { //We do not care about the last node for it has no successor.
+        	successors_ok.clear();
+        	//Listing successors leading to the next node
+        	for(int j = 0; j<nodes.get(i).getNumberOfSuccessors();j++) {
+        		if( nodes.get(i).getSuccessors().get(j).getDestination() == nodes.get(i+1) ) {
+        			successors_ok.add(nodes.get(i).getSuccessors().get(j));
+        		}
         	}
+        	//Failure to retrieve successors leading to the next node
+        	if(successors_ok.isEmpty()) {
+        		throw new IllegalArgumentException("Node without successor");
+        	}
+        	//Finding the shortest arc leading to the next node
+        	shortest_arc = successors_ok.get(0);
+        	for(int j = 0; j<successors_ok.size(); j++) {
+        		if(successors_ok.get(j).getLength() < shortest_arc.getLength()) {
+        			shortest_arc = successors_ok.get(j);
+        		}
+        	}
+        	//Adding shortest arc to the arcs list
+        	arcs.add(shortest_arc);
         }
-        System.out.println(arcs);
         return new Path(graph, arcs);
     }
+    /*
+    public static Path createShortestPathFromNodes(Graph graph, List<Node> nodes)
+            throws IllegalArgumentException {
+    	if(nodes.size() == 0) {
+            return new Path(graph); 
+        }
+        if(nodes.size() == 1) {
+            return new Path(graph, nodes.get(0)); 
+        }
+        List<Arc> arcs = new ArrayList<Arc>();
+        // TODO:
+        //List<Arc> successors_ok = new ArrayList<Arc>(); //List of successors leading to the next node
+        Arc shortest_arc;
+        for(int i = 0; i < nodes.size()-1; i++) { //We do not care about the last node for it has no successor.
+        	
+        	//Listing successors leading to the next node
+        	for(int j = 0; j<nodes.get(i).getNumberOfSuccessors();j++) {
+        		if( nodes.get(i).getSuccessors().get(j).getDestination() == nodes.get(i+1) ) {
+        			if(shortest_arc.getDestination() == nodes.get(i+1)) { //Initializing shortest_arc with the first arc leading to the next node
+        				if(nodes.get(i).getSuccessors().get(j).getLength() < shortest_arc.getLength()) {        					
+        					shortest_arc = nodes.get(i).getSuccessors().get(j);					
+        				}
+        			} else {	
+        				shortest_arc = nodes.get(i).getSuccessors().get(j);
+        			}
+        		}
+        		
+        	}
+        	
+        	//Failure to retrieve successors leading to the next node
+        	if(shortest_arc.getDestination() != nodes.get(i+1)) {
+        		throw new IllegalArgumentException("Node without successor");
+        	}
+        	
+        	//Adding shortest arc to the arcs list
+        	arcs.add(shortest_arc);
+        }
+        return new Path(graph, arcs);
+    }*/
 
     /**
      * Concatenate the given paths.
