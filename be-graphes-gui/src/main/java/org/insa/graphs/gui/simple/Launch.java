@@ -14,6 +14,7 @@ import org.insa.graphs.gui.drawing.components.BasicDrawing;
 import org.insa.graphs.model.Graph;
 import org.insa.graphs.model.Path;
 import org.insa.graphs.model.io.BinaryGraphReader;
+import org.insa.graphs.model.io.BinaryPathReader;
 import org.insa.graphs.model.io.GraphReader;
 import org.insa.graphs.model.io.PathReader;
 // Guerbette Valentin 02/04/2021
@@ -46,8 +47,8 @@ public class Launch {
     public static void main(String[] args) throws Exception {
 
         // Visit these directory to see the list of available files on Commetud.
-        final String mapName = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Maps/insa.mapgr";
-        final String pathName = "/home/commetud/3eme Annee MIC/Graphes-et-Algorithmes/Paths/path_fr31insa_rangueil_r2.path";
+        final String mapName = "/home/work/Repositories/be-graphe/.maps/insa.mapgr";
+        final String pathName = "/home/work/Repositories/be-graphe/.paths/path_fr31insa_rangueil_r2.path";
 
         // Create a graph reader.
         final GraphReader reader = new BinaryGraphReader(
@@ -68,9 +69,10 @@ public class Launch {
                 new DataInputStream(new BufferedInputStream(new FileInputStream(pathName))));
         
         // TODO: Read the path.
-        final Path path = null;
+        final Path path = pathReader.readPath(graph);
 
         // TODO: Draw the path.
+        drawing.drawPath(path);
     }
 
 }
