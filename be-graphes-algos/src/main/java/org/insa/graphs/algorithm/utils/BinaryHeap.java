@@ -136,15 +136,41 @@ public class BinaryHeap<E extends Comparable<E>> implements PriorityQueue<E> {
     }
 
     @Override
+  
     public void remove(E x) throws ElementNotFoundException {
+    	//System.out.println("0000000000000000000000000000000");
         // TODO:
-    	if(this.size() == 0) {
+    	if(this.isEmpty()) { // Dealing with an empty heap 
     		throw new ElementNotFoundException(x);
     	}
     	
-    	int index = this.currentSize--;
-    	
+    	//BinaryHeap<E> this_cpy = new BinaryHeap<E>(this);
+    	BinaryHeap<E> aux = new BinaryHeap<E>(); //Auxiliary heap that will temporarily contain the removed minimas that are not x 
+    	//System.out.println(this);
+    	//System.out.println("___________");
+    	E aux_E = this.deleteMin(); 
+    	while(aux_E != x) {
+    		aux.insert(aux_E); //Adding the removed minima to the auxiliary heap
+    		//System.out.println(this);
+    		//System.out.println("___________");
+    		try { //If deleting from empty queue exception, raise element not found (the whole tree got deleted )
+    			aux_E = this.deleteMin();
+    		} catch(EmptyPriorityQueueException e) {
+    			while(!aux.isEmpty()) { //Restoring the heap before throwing the exception
+    	    		this.insert(aux.deleteMin());
+    	    	}
+    			throw new ElementNotFoundException(x); 
+    		}
+    	}
+    	//System.out.println(this);
+    	//System.out.println("___________");
+    	while(!aux.isEmpty()) { //Restoring the heap without x
+    		this.insert(aux.deleteMin());
+    	}
+    	//System.out.println(this);
+    	//System.out.println("___________");
     }
+    
 
     @Override
     public E findMin() throws EmptyPriorityQueueException {
