@@ -261,7 +261,11 @@ public abstract class PriorityQueueTest {
         Assume.assumeFalse(queue.isEmpty());
         for (MutableInteger data: parameters.data) {
             PriorityQueue<MutableInteger> copyQueue = this.createQueue(this.queue);
+            //System.out.println(copyQueue);
+            //System.out.println("1");
             copyQueue.remove(data);
+            //System.out.println("2");
+
             try {
                 copyQueue.remove(data);
                 fail("Expected exception " + ElementNotFoundException.class.getName());
