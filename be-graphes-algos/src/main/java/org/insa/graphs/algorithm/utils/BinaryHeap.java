@@ -136,11 +136,14 @@ public class BinaryHeap<E extends Comparable<E>> implements PriorityQueue<E> {
     }
 
     @Override
+
     
     /*Questions de compréhension:
   	Les tests pour BinaryHeap sont en réalité hérités d'une classe abstraite PriorityQueue. 
   	Il n'est pas nécessaire de connaitre l'implémentation de BinaryHeap pour concevoir sa classe test.
   	*/
+
+  
     public void remove(E x) throws ElementNotFoundException {
     	//System.out.println("0000000000000000000000000000000");
         // TODO:

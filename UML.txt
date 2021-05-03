@@ -2,10 +2,17 @@
 // ------------------
 
 // Chain elements like this
-[Node]<-<>[RoadInformation]
+[Customer]<>-orders*>[Order]++-0..*>[LineItem]
+
 // Add notes
-[Arc]-[note: Aggregate Root ala DDD{bg:wheat}]
+[Order]-[note: Aggregate Root ala DDD{bg:wheat}]
 
 // Add more detail
-[Node|origin: Node;destination: Node;length: float;  roadinformation: RoadInformation; points: ArrayList\<Point\>|login(user,pass)]
-[≪IDisposable≫;Customer|+forname: string;+surname: string;-password: string|login(user,pass)] 
+[AbstractAlgorithm|getInputData();run()]
+
+[AbstractInputData|double getCost(Arc arc);Graph getGraph();int getMaximumSpeed();AbstractInputData.Mode getMode();boolean isAllowed​(Arc arc)]
+
+[AbstractSolution|AbstractInputData getInputData();java.time.Duration 	 getSolvingTime() ;AbstractSolution.Status getStatus();boolean isFeasible()]
+
+[AlgorithmFactory|static AbstractAlgorithm<?> 	createAlgorithm​(AbstractAlgorithm algorithm, AbstractInputData data);AbstractAlgorithm
+getAlgorithmClass​(AbstractAlgorithm baseAlgorithm,String name);String getAlgorithmNames​(AbstractAlgorithm baseAlgorithm); 	registerAlgorithm​(AbstractAlgorithm baseAlgorithm, String name, AbstractAlgorithm algoClass)]
