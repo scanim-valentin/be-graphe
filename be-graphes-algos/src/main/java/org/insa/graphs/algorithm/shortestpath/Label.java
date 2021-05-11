@@ -1,3 +1,4 @@
+package org.insa.graphs.algorithm.shortestpath;
 import org.insa.graphs.model.Arc;
 import org.insa.graphs.model.Node;
 
@@ -36,8 +37,8 @@ public class Label{
     	return cost;
     }
     
-    private void updateParent(Arc parent) {
-    	this.parent = parent; 
+    private void updateParent(Arc Parent) {
+    	this.parent = Parent; 
     }
     
     public Arc getParent() {
