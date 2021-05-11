@@ -34,7 +34,8 @@ public class Label{
     }
     
     public double getCost() {
-    	return cost;
+    	return cost;a7927ab188c1942ff13477ede5eff435367f988c
+
     }
     
     private void updateParent(Arc Parent) {
