@@ -13,37 +13,61 @@ public class Label{
     	this.currentNode = current;
     }
     
+    /*
+     * Is true if this label's current node has a lower or equal cost than the other's
+     */
     public boolean compareTo(Label other) {
-    	return this.cost > other.getCost();
+    	return this.cost <= other.getCost();
     }
     
+    /*
+     * Return the node which this label is attached to 
+     */
     public Node getCurrentNode() {
-    	return currentNode;
+    	return this.currentNode;
     }
     
+    /*
+     * Update the minKnown flag to true which indicates the minimum cost to currentNode has been found
+     */
     public void setMinKnown() {
     	this.minKnown = true;
     }
     
+    /*
+     * Returns the value of the minKnown flag
+     */
     public boolean isMinKnown() {
-    	return minKnown;
+    	return this.minKnown;
     }
     
+    /*
+     * Update the cost to newCost (should only be updated to a lower value)
+     */
     public void updateCost(double newCost) {
     	this.cost = newCost;
     }
     
+    /*
+     * Return to cost of currentNode
+     */
     public double getCost() {
-    	return cost;a7927ab188c1942ff13477ede5eff435367f988c
+    	return this.cost;
 
     }
     
-    private void updateParent(Arc Parent) {
+    /*
+     * Update the currentNode's parent with the arc that leads to it
+     */
+    public void updateParent(Arc Parent) {
     	this.parent = Parent; 
     }
     
+    /*
+     * Returns parent 
+     */
     public Arc getParent() {
-    	return parent;
+    	return this.parent;
     }
     
     
