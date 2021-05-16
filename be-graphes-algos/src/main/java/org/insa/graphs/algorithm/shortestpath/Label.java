@@ -6,13 +6,23 @@ public class Label{
 	
 	private Node currentNode = null; 
 	private boolean minKnown = false;
-	private double cost = 0;
+	private double cost = 1.0/0.0;
 	private Arc parent = null;
 	
     public Label(Node current) {
     	this.currentNode = current;
     }
     
+    public Label(Node current, double initCost) {
+    	this.currentNode = current;
+    	this.cost = initCost;
+    }
+    
+    public Label(Node current, double initCost, Arc initParent) {
+    	this.currentNode = current;
+    	this.cost = initCost;
+    	this.parent = initParent;
+    }
     /*
      * Is true if this label's current node has a lower or equal cost than the other's
      */
