@@ -2,7 +2,8 @@ package org.insa.graphs.algorithm.shortestpath;
 import org.insa.graphs.model.Arc;
 import org.insa.graphs.model.Node;
 
-public class Label{
+//Requires compareTo method implementation to be used in BinaryHeap 
+public class Label implements Comparable<Label> {
 	
 	private Node currentNode = null; 
 	private boolean minKnown = false;
@@ -24,10 +25,11 @@ public class Label{
     	this.parent = initParent;
     }
     /*
-     * Is true if this label's current node has a lower or equal cost than the other's
+     * Required for use in BinaryHeap
      */
-    public boolean compareTo(Label other) {
-    	return this.cost <= other.getCost();
+    public int compareTo(Label other) {
+    	//Using Double.compare to deal with particular values such as -0.0, +0.0 or NaN
+    	return Double.compare(getCost(), other.getCost());
     }
     
     /*
