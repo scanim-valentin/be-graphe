@@ -4,6 +4,7 @@ import org.insa.graphs.algorithm.utils.BinaryHeap;
 import org.insa.graphs.model.Arc;
 import org.insa.graphs.model.Graph;
 import org.insa.graphs.model.Node;
+import org.insa.graphs.model.Path;
 
 import java.util.ArrayList;
 import org.insa.graphs.algorithm.AbstractSolution.Status;
@@ -37,7 +38,8 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
     	notifyOriginProcessed(data.getOrigin());
     	//Iterations 
     	Label destinationLabel = LabelList[data.getDestination().getId()];
-    	while( destinationLabel.isMinKnown() ) {
+    	while( !LabelHeap.isEmpty() && !destinationLabel.isMinKnown() ) {
+    		//ATTENTION : LabelHeap.isEmpty required to avoid isolated unreachable destination
     		Label xLabel = LabelHeap.findMin();
     		xLabel.setMinKnown();
     		notifyNodeMarked(xLabel.getCurrentNode());
@@ -49,7 +51,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
     			if( (!yLabel.isMinKnown()) && (yLabel.getCost() > xLabel.getCost()+W) ) {
     				
     				
-    				if( Double.isFinite(yLabel.getCost() ) {
+    				if( Double.isFinite(yLabel.getCost()) ) {
     					//If y cost finite then y has already been inserted in the tree before
     					LabelHeap.remove(yLabel);
     					notifyNodeReached(yLabel.getCurrentNode());
@@ -62,14 +64,23 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
     			
     		
         }
+    	System.out.print("LabelList = "+LabelList);
         //Assembling the solution
-    	ArrayList<Arc> ArcList = new ArrayList<>();
         Arc auxArc = LabelList[data.getDestination().getId()].getParent();
-        ArcList.add(auxArc);
-        while(auxArc != null) {
-        	auxArc = auxArc.
+        ArrayList<Arc> ArcList = null;
+        if(auxArc != null) {
+	        ArcList = new ArrayList<>();
+	        
+	        while(auxArc != null) {
+	        	ArcList.add(auxArc);
+	        	auxArc = LabelList[auxArc.getDestination().getId()].getParent();
+	        }
+	        solution = new ShortestPathSolution(data, Status.OPTIMAL, new Path(graph, ArcList));
         }
-        return solution;
+        else {
+        	 solution = new ShortestPathSolution(data, Status.OPTIMAL);
+        }
+	    return solution;
     }
 
 }

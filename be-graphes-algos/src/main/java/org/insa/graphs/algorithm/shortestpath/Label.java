@@ -82,6 +82,9 @@ public class Label implements Comparable<Label> {
     	return this.parent;
     }
     
+    public String toString() {
+    	return "{ID = "+this.currentNode.getId()+", Cost = "+this.cost+", Marked = "+this.minKnown+"}";
+    }
     
 
 }
