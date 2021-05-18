@@ -7,6 +7,9 @@ import org.insa.graphs.model.Node;
 import org.insa.graphs.model.Path;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.insa.graphs.algorithm.AbstractSolution.Status;
 
 public class DijkstraAlgorithm extends ShortestPathAlgorithm {
@@ -14,7 +17,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
     public DijkstraAlgorithm(ShortestPathData data) {
         super(data);
     }
-
+    
     @Override
     protected ShortestPathSolution doRun() {
         final ShortestPathData data = getInputData();
@@ -40,25 +43,29 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
     	Label destinationLabel = LabelList[data.getDestination().getId()];
     	while( !LabelHeap.isEmpty() && !destinationLabel.isMinKnown() ) {
     		//ATTENTION : LabelHeap.isEmpty required to avoid isolated unreachable destination
-    		Label xLabel = LabelHeap.findMin();
+    		Label xLabel = LabelHeap.deleteMin();
     		xLabel.setMinKnown();
     		notifyNodeMarked(xLabel.getCurrentNode());
-    		for(Arc yArc : xLabel.getCurrentNode().getSuccessors()) {
-    			Node y = yArc.getDestination();
-    			Label yLabel = LabelList[y.getId()];
-    			yLabel.updateParent(yArc);
-    			double W = data.getCost(yArc);
-    			if( (!yLabel.isMinKnown()) && (yLabel.getCost() > xLabel.getCost()+W) ) {
-    				
-    				
-    				if( Double.isFinite(yLabel.getCost()) ) {
-    					//If y cost finite then y has already been inserted in the tree before
-    					LabelHeap.remove(yLabel);
-    					notifyNodeReached(yLabel.getCurrentNode());
-    				}
-    				//else : y is infinite and has been reached for the first time
-    				yLabel.updateCost(xLabel.getCost()+W);
-    				LabelHeap.insert(yLabel);
+    		List<Arc> xSuccessors = xLabel.getCurrentNode().getSuccessors();
+    		for(Arc yArc : xSuccessors) {
+    			if(data.isAllowed(yArc)) {
+	    			Node y = yArc.getDestination();
+	    			Label yLabel = LabelList[y.getId()];
+	    			
+	    			double W = data.getCost(yArc);
+	    			if( (!yLabel.isMinKnown()) && (yLabel.getCost() > xLabel.getCost()+W) ) {
+	    				
+	    				
+	    				if( Double.isFinite(yLabel.getCost()) ) {
+	    					//If y cost finite then y has already been inserted in the tree before
+	    					LabelHeap.remove(yLabel);
+	    					notifyNodeReached(yLabel.getCurrentNode());
+	    				}
+	    				//else : y is infinite and has been reached for the first time
+	    				yLabel.updateCost(xLabel.getCost()+W);
+	    				LabelHeap.insert(yLabel);
+	    				yLabel.updateParent(yArc);
+	    			}
     			}
     		}
     			
@@ -69,18 +76,23 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         Arc auxArc = LabelList[data.getDestination().getId()].getParent();
         ArrayList<Arc> ArcList = null;
         if(auxArc != null) {
+        	notifyDestinationReached(data.getDestination());
 	        ArcList = new ArrayList<>();
 	        
 	        while(auxArc != null) {
 	        	ArcList.add(auxArc);
-	        	auxArc = LabelList[auxArc.getDestination().getId()].getParent();
+	        	auxArc = LabelList[auxArc.getOrigin().getId()].getParent();
 	        }
+	        //Reversing ArcList : it needs to start from the origin
+	        Collections.reverse(ArcList);
 	        solution = new ShortestPathSolution(data, Status.OPTIMAL, new Path(graph, ArcList));
         }
         else {
-        	 solution = new ShortestPathSolution(data, Status.OPTIMAL);
+        	//
+        	 solution = new ShortestPathSolution(data, Status.INFEASIBLE);
         }
 	    return solution;
     }
-
+	
+  
 }
