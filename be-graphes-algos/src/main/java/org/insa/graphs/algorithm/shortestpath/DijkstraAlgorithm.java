@@ -59,8 +59,11 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 	    				if( Double.isFinite(yLabel.getCost()) ) {
 	    					//If y cost finite then y has already been inserted in the tree before
 	    					LabelHeap.remove(yLabel);
+	    					
+	    				}else {
 	    					notifyNodeReached(yLabel.getCurrentNode());
 	    				}
+	    			
 	    				//else : y is infinite and has been reached for the first time
 	    				yLabel.updateCost(xLabel.getCost()+W);
 	    				LabelHeap.insert(yLabel);
@@ -88,7 +91,6 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 	        solution = new ShortestPathSolution(data, Status.OPTIMAL, new Path(graph, ArcList));
         }
         else {
-        	//
         	 solution = new ShortestPathSolution(data, Status.INFEASIBLE);
         }
 	    return solution;

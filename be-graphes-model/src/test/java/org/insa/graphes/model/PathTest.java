@@ -20,7 +20,7 @@ import org.junit.Test;
 public class PathTest {
 
     // Small graph use for tests
-    private static Graph graph;
+    private static Graph graphCarre;
 
     // List of nodes
     private static Node[] nodes;
@@ -40,6 +40,8 @@ public class PathTest {
         RoadInformation speed10 = new RoadInformation(RoadType.MOTORWAY, null, true, 36, ""),
                 speed20 = new RoadInformation(RoadType.MOTORWAY, null, true, 72, "");
 
+        
+        
         // Create nodes
         nodes = new Node[5];
         for (int i = 0; i < nodes.length; ++i) {
