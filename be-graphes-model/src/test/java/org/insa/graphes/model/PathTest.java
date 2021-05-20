@@ -20,7 +20,7 @@ import org.junit.Test;
 public class PathTest {
 
     // Small graph use for tests
-    private static Graph graphCarre;
+    private static Graph graph;
 
     // List of nodes
     private static Node[] nodes;

@@ -19,30 +19,37 @@ import org.junit.Test;
 
 import org.insa.graphs.algorithm.shortestpath.DijkstraAlgorithm;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+
+
+import org.insa.graphs.model.io.BinaryGraphReader;
+import org.insa.graphs.model.io.BinaryPathReader;
+import org.insa.graphs.model.io.GraphReader;
+import org.insa.graphs.model.io.PathReader;
+
 public class DijkstraTest {
 
     // Small graph use for tests
     private static Graph graph;
-
-    // List of nodes
-    private static Node[] nodes;
-
-    // List of arcs in the graph, a2b is the arc from node A (0) to B (1).
-    @SuppressWarnings("unused")
-    private static Arc a2b, a2c, a2e, b2c, c2d_1, c2d_2, c2d_3, c2a, d2a, d2e, e2d;
-
-    // Some paths...
-    private static Path emptyPath, singleNodePath, shortPath, longPath, loopPath, longLoopPath,
-            invalidPath;
-
+    
+    // Path to the .mapgr file used for testing
+    private static String mapName ; 
+        
     @BeforeClass
     public static void initAll() throws IOException {
 
-       
-
+    	 mapInsa = "/.maps/insa.mapgr";
+    	 
     }
 
-    @Test
+    /*@Test
     public void testConstructor() {
         assertEquals(graph, emptyPath.getGraph());
         assertEquals(graph, singleNodePath.getGraph());
@@ -56,7 +63,9 @@ public class DijkstraTest {
     @Test(expected = UnsupportedOperationException.class)
     public void testImmutability() {
         emptyPath.getArcs().add(a2b);
+    }*/
+    public void singleNode() {
+    	
     }
-
     
 }
