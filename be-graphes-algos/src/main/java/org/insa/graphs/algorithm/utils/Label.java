@@ -1,4 +1,4 @@
-package org.insa.graphs.algorithm.shortestpath;
+package org.insa.graphs.algorithm.utils;
 import org.insa.graphs.model.Arc;
 import org.insa.graphs.model.Node;
 
@@ -7,7 +7,7 @@ public class Label implements Comparable<Label> {
 	
 	private Node currentNode = null; 
 	private boolean minKnown = false;
-	private double cost = 1.0/0.0;
+	protected double cost = 1.0/0.0;
 	private Arc parent = null;
 	
     public Label(Node current) {
@@ -29,7 +29,7 @@ public class Label implements Comparable<Label> {
      */
     public int compareTo(Label other) {
     	//Using Double.compare to deal with particular values such as -0.0, +0.0 or NaN
-    	return Double.compare(getCost(), other.getCost());
+    	return Double.compare(getTotalCost(), other.getTotalCost());
     }
     
     /*
@@ -69,6 +69,14 @@ public class Label implements Comparable<Label> {
     }
     
     /*
+     * Return to cost of currentNode
+     */
+    public double getTotalCost() {
+    	return this.cost;
+
+    }
+    
+    /*
      * Update the currentNode's parent with the arc that leads to it
      */
     public void updateParent(Arc Parent) {
@@ -82,9 +90,12 @@ public class Label implements Comparable<Label> {
     	return this.parent;
     }
     
+   
+    @Override
     public String toString() {
     	return "{ID = "+this.currentNode.getId()+", Cost = "+this.cost+", Marked = "+this.minKnown+"}";
     }
+    
     
 
 }

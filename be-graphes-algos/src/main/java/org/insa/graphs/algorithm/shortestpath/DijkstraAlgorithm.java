@@ -1,6 +1,7 @@
 package org.insa.graphs.algorithm.shortestpath;
 
 import org.insa.graphs.algorithm.utils.BinaryHeap;
+import org.insa.graphs.algorithm.utils.Label;
 import org.insa.graphs.model.Arc;
 import org.insa.graphs.model.Graph;
 import org.insa.graphs.model.Node;
@@ -18,6 +19,15 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         super(data);
     }
     
+    protected Label[] initLabels(ShortestPathData data) {
+    	Label[] LabelList = new Label[data.getGraph().size()];
+    	for (int i = 0 ; i < data.getGraph().size() ; i++) {
+        	//Associating each node to a Label
+    		LabelList[i] = new Label(data.getGraph().get(i)); //Default Label Init : minKnown = false, cost = inf. , father = null		 	
+    	}
+    	return LabelList;
+    }
+        
     @Override
     protected ShortestPathSolution doRun() {
         final ShortestPathData data = getInputData();
@@ -27,11 +37,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
         //Retrieving the graph
         Graph graph = data.getGraph();
         //Initialization
-        Label[] LabelList = new Label[graph.size()];
-    	for (int i = 0 ; i < graph.size() ; i++) {
-        	//Associating each node to a Label
-    		LabelList[i] = new Label(graph.get(i)); //Default Label Init : minKnown = false, cost = inf. , father = null		
-    	}
+        Label[] LabelList = initLabels(data);
     	//Initiating start node
     	Node start = data.getOrigin();
     	LabelList[start.getId()].updateCost(0);
@@ -66,6 +72,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 	    			
 	    				//else : y is infinite and has been reached for the first time
 	    				yLabel.updateCost(xLabel.getCost()+W);
+	    				System.out.print("Dijkstra yLabel.cost = "+yLabel.getCost()+"\n");
 	    				LabelHeap.insert(yLabel);
 	    				yLabel.updateParent(yArc);
 	    			}
