@@ -74,7 +74,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
     			
     		
         }
-    	System.out.print("LabelList = "+LabelList);
+    	//System.out.print("LabelList = "+LabelList);
         //Assembling the solution
         Arc auxArc = LabelList[data.getDestination().getId()].getParent();
         ArrayList<Arc> ArcList = null;

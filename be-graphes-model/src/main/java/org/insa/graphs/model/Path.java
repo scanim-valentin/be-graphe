@@ -117,46 +117,7 @@ public class Path {
         }
         return new Path(graph, arcs);
     }
-    /*
-    public static Path createShortestPathFromNodes(Graph graph, List<Node> nodes)
-            throws IllegalArgumentException {
-    	if(nodes.size() == 0) {
-            return new Path(graph); 
-        }
-        if(nodes.size() == 1) {
-            return new Path(graph, nodes.get(0)); 
-        }
-        List<Arc> arcs = new ArrayList<Arc>();
-        // TODO:
-        //List<Arc> successors_ok = new ArrayList<Arc>(); //List of successors leading to the next node
-        Arc shortest_arc;
-        for(int i = 0; i < nodes.size()-1; i++) { //We do not care about the last node for it has no successor.
-        	
-        	//Listing successors leading to the next node
-        	for(int j = 0; j<nodes.get(i).getNumberOfSuccessors();j++) {
-        		if( nodes.get(i).getSuccessors().get(j).getDestination() == nodes.get(i+1) ) {
-        			if(shortest_arc.getDestination() == nodes.get(i+1)) { //Initializing shortest_arc with the first arc leading to the next node
-        				if(nodes.get(i).getSuccessors().get(j).getLength() < shortest_arc.getLength()) {        					
-        					shortest_arc = nodes.get(i).getSuccessors().get(j);					
-        				}
-        			} else {	
-        				shortest_arc = nodes.get(i).getSuccessors().get(j);
-        			}
-        		}
-        		
-        	}
-        	
-        	//Failure to retrieve successors leading to the next node
-        	if(shortest_arc.getDestination() != nodes.get(i+1)) {
-        		throw new IllegalArgumentException("Node without successor");
-        	}
-        	
-        	//Adding shortest arc to the arcs list
-        	arcs.add(shortest_arc);
-        }
-        return new Path(graph, arcs);
-    }*/
-
+    
     /**
      * Concatenate the given paths.
      * 
@@ -354,5 +315,36 @@ public class Path {
     	}
         return R;
     }
+    
+    /**
+     * Checks if this path and another path extracted from the same graph are the same
+     * NOTE : it is required to directly compare origin and destination Nodes for each Arc
+     * because they directly reference to the Graph unlike the Arc lists built during the execution
+     * of the algorithms 
+     * @param other Another path
+     * @return True if they are equal or False if they are not
+     */
+    /*
+    @Override
+    public boolean equals(Object other) {
+    	boolean R = false;
+    	Path other_path = (Path) other;
+    	if(other_path != null && (other_path.size() == this.size()) ) {
+    		
+    		R = true;
+    		int i = 0;
+    		List<Arc> other_arcs = other_path.getArcs();
+    		
+    		while( R == true && (i < this.getArcs().size()) ) {
+    			System.out.print("size = "+this.size()+" i = "+i+"\n");
+    			R = ( other_arcs.get(i).getOrigin().getId() == this.arcs.get(i).getOrigin().getId() ) && ( other_arcs.get(i).getDestination().getId() == this.arcs.get(i).getDestination().getId() );
+    			i++;
+
+    		}
+    		System.out.print("R = "+R+"\n");
+    	}
+    	return R;
+    }*/
+    
 
 }
