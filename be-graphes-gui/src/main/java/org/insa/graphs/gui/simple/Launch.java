@@ -9,6 +9,8 @@ import java.io.FileInputStream;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import org.insa.graphs.algorithm.utils.BinaryHeap;
+import org.insa.graphs.algorithm.utils.Label;
 import org.insa.graphs.gui.drawing.Drawing;
 import org.insa.graphs.gui.drawing.components.BasicDrawing;
 import org.insa.graphs.model.Graph;
@@ -17,6 +19,8 @@ import org.insa.graphs.model.io.BinaryGraphReader;
 import org.insa.graphs.model.io.BinaryPathReader;
 import org.insa.graphs.model.io.GraphReader;
 import org.insa.graphs.model.io.PathReader;
+
+import org.insa.graphs.problemeouvert.AlgoBestNodes;
 // Guerbette Valentin 02/04/2021
 public class Launch {
 
@@ -45,10 +49,10 @@ public class Launch {
     }
 
     public static void main(String[] args) throws Exception {
-
+    	
         // Visit these directory to see the list of available files on Commetud.
-        final String mapName = "/home/work/Repositories/be-graphe/.maps/insa.mapgr";
-        final String pathName = "/home/work/Repositories/be-graphe/.paths/path_fr31insa_rangueil_r2.path";
+        final String mapName = "/home/work/Repositories/be-graphe/maps/insa.mapgr";
+        //final String pathName = "/home/work/Repositories/be-graphe/.paths/path_fr31insa_rangueil_r2.path";
 
         // Create a graph reader.
         final GraphReader reader = new BinaryGraphReader(
@@ -58,6 +62,9 @@ public class Launch {
         final Graph graph = reader.read();
         System.out.println(graph);
         
+        BinaryHeap<Label> AlgoCentresGraphe = AlgoBestNodes.doRun(graph,4);
+        System.out.println(AlgoCentresGraphe);
+        /*
         // Create the drawing:
         final Drawing drawing = createDrawing();
 
@@ -72,7 +79,7 @@ public class Launch {
         final Path path = pathReader.readPath(graph);
 
         // TODO: Draw the path.
-        drawing.drawPath(path);
+        drawing.drawPath(path);*/
     }
 
 }

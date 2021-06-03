@@ -17,7 +17,7 @@ public class BinaryHeap<E extends Comparable<E>> implements PriorityQueue<E> {
     private int currentSize;
 
     // The heap array.
-    protected final ArrayList<E> array;
+    public ArrayList<E> array;
 
     /**
      * Construct a new empty binary heap.

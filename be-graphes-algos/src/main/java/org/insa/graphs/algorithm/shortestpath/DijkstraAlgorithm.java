@@ -72,7 +72,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
 	    			
 	    				//else : y is infinite and has been reached for the first time
 	    				yLabel.updateCost(xLabel.getCost()+W);
-	    				System.out.print("Dijkstra yLabel.cost = "+yLabel.getCost()+"\n");
+	    				//System.out.print("Dijkstra yLabel.cost = "+yLabel.getCost()+"\n");
 	    				LabelHeap.insert(yLabel);
 	    				yLabel.updateParent(yArc);
 	    			}
